@@ -1,0 +1,5 @@
+# Debugger
+.vscode/
+
+# virtual environment
+.venv/

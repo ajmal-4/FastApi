@@ -9,10 +9,12 @@ project_dir = current_file.parents[2]
 
 # Construct .env path
 env_path = project_dir / ".env"
+# Sqlite path
+db_path = project_dir / "restaurant.db"
 
 class Settings(BaseSettings):
     # Database
-    database_url: str = "sqlite:///./restaurant.db"
+    database_url: str = f"sqlite:///{db_path}"
     
     # WhatsApp API
     twilio_account_sid: str = ""

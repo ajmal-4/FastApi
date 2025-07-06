@@ -4,6 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from .core.config import settings
 from .core.database import engine
 from .api.v1.api import api_router
+from .models import menu, order
+
+# Create database tables
+menu.Base.metadata.create_all(bind=engine)
+order.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Restaurant WhatsApp Bot API",

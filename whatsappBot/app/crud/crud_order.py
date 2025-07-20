@@ -8,14 +8,16 @@ from ..models.menu import MenuItem
 
 class CRUDOrder(CRUDBase[Order, OrderCreate, OrderUpdate]):
     def create_with_items(self, db: Session, *, obj_in: OrderCreate) -> Order:
+        total_amount = 0
+
         # Create order
-        order_data = obj_in.dict(exclude={'items'})
+        order_data = obj_in.model_dump(exclude={'items'})
+        order_data["total_amount"] = total_amount
         db_order = Order(**order_data)
         db.add(db_order)
         db.flush()  # To get the order ID
         
         # Add order items and calculate total
-        total_amount = 0
         for item_data in obj_in.items:
             # Get menu item price
             menu_item = db.query(MenuItem).filter(MenuItem.id == item_data.menu_item_id).first()

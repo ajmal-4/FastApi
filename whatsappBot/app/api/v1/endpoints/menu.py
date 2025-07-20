@@ -36,3 +36,14 @@ def update_menu_item(item_id: int, item: MenuItemUpdate, db: Session = Depends(g
     # Update the item
     updated_item = menu_item.update(db, db_obj=db_item, obj_in=item)
     return updated_item
+
+@router.delete("/{item_id}", response_model=MenuItem)
+def delete_menu_item(item_id: int, db: Session = Depends(get_database())):
+    """Soft delete a menu item (mark as unavailable)"""
+    # Get the existing DB object
+    db_item = menu_item.get(db, id=item_id)
+    if not db_item:
+        raise HTTPException(status_code=404, detail="Menu item not found")
+    
+    updated_item = menu_item.update(db, db_obj=db_item, obj_in={"is_available": False})
+    return updated_item

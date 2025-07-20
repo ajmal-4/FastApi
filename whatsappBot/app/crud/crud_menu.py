@@ -7,12 +7,14 @@ from ..schemas.menu import MenuItemCreate, MenuItemUpdate
 
 class CRUDMenuItem(CRUDBase[MenuItem, MenuItemCreate, MenuItemUpdate]):
     def get_by_category(self, db: Session, *, category: str) -> List[MenuItem]:
+        """ Get menu by category """
         return db.query(MenuItem).filter(
             MenuItem.category == category,
             MenuItem.is_available == True
         ).all()
     
     def get_available_items(self, db: Session) -> List[MenuItem]:
+        """ get all the available items """
         return db.query(MenuItem).filter(MenuItem.is_available == True).all()
 
 menu_item = CRUDMenuItem(MenuItem)

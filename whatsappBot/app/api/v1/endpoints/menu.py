@@ -14,7 +14,7 @@ def get_menu(db: Session = Depends(get_database())):
     """Get all available menu items"""
     return menu_item.get_available_items(db)
 
-@router.get("/category/{category}", response_model=List[MenuItem])
+@router.get("/category/{category_id}", response_model=List[MenuItem])
 def get_menu_by_category(category_id: str, db: Session = Depends(get_database())):
     """Get menu items by category"""
     return menu_item.get_by_category(db, category_id=category_id)

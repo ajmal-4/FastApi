@@ -6,10 +6,10 @@ from ..models.menu import MenuItem, Category
 from ..schemas.menu import MenuItemCreate, MenuItemUpdate, CategoryCreate, CategoryUpdate
 
 class CRUDMenuItem(CRUDBase[MenuItem, MenuItemCreate, MenuItemUpdate]):
-    def get_by_category(self, db: Session, *, category: str) -> List[MenuItem]:
+    def get_by_category(self, db: Session, *, category_id: int) -> List[MenuItem]:
         """ Get menu by category """
         return db.query(MenuItem).filter(
-            MenuItem.category == category,
+            MenuItem.category_id == category_id,
             MenuItem.is_available
         ).all()
     

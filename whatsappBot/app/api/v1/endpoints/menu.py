@@ -4,8 +4,15 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from ....api.deps import get_database
-from ....crud.crud_menu import menu_item, category
-from ....schemas.menu import MenuItem, MenuItemCreate, MenuItemUpdate, Category, CategoryCreate, CategoryUpdate
+from ....crud.crud_menu import category, menu_item
+from ....schemas.menu import (
+    Category,
+    CategoryCreate,
+    CategoryUpdate,
+    MenuItem,
+    MenuItemCreate,
+    MenuItemUpdate,
+)
 
 router = APIRouter()
 
@@ -15,7 +22,7 @@ def get_menu(db: Session = Depends(get_database())):
     return menu_item.get_available_items(db)
 
 @router.get("/category/{category_id}", response_model=List[MenuItem])
-def get_menu_by_category(category_id: str, db: Session = Depends(get_database())):
+def get_menu_by_category(category_id: int, db: Session = Depends(get_database())):
     """Get menu items by category"""
     return menu_item.get_by_category(db, category_id=category_id)
 

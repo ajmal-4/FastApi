@@ -9,6 +9,21 @@ from ....services.order_service import order_service
 
 router = APIRouter()
 
+VERIFY_TOKEN = "sample_token"  # you decide this string
+
+@router.get("/webhook")
+async def verify_webhook(request: Request):
+    """
+    Meta will send a GET request with hub.mode, hub.challenge, and hub.verify_token
+    """
+    params = request.query_params
+    if (
+        params.get("hub.mode") == "subscribe"
+        and params.get("hub.verify_token") == VERIFY_TOKEN
+    ):
+        return int(params.get("hub.challenge"))
+    return {"error": "Invalid verification token"}
+
 @router.post("/webhook")
 async def whatsapp_webhook(request: Request, db: Session = Depends(get_database)):
     """Handle incoming WhatsApp messages"""

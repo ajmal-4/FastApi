@@ -10,3 +10,7 @@ __pycache__/
 
 # Sqlite Database
 *.db
+
+# Alembic
+alembic/__pycache__/
+alembic/*.pyc

@@ -14,7 +14,7 @@ db_path = project_dir / "restaurant.db"
 
 class Settings(BaseSettings):
     # Database
-    database_url: str = f"sqlite:///{db_path}"
+    database_url: str = ""
     
     # WhatsApp API
     twilio_account_sid: str = ""
@@ -27,5 +27,7 @@ class Settings(BaseSettings):
     
     class Config:
         env_file = env_path
+        case_sensitive = False
+        extra = "allow"
 
 settings = Settings()

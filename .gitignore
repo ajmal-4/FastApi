@@ -3,3 +3,6 @@
 
 # virtual environment
 .venv/
+
+# Ruff Cache
+.ruff_cache
